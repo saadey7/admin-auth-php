@@ -1,0 +1,28 @@
+{
+    "name": "saadmughal/admin-auth-php",
+    "description": "Admin authentication package for Laravel with Firebase notifications",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+      "psr-4": {
+        "Mughal\\AdminAuth\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Mughal\\AdminAuth\\AdminAuthServiceProvider"
+        ]
+      }
+    },
+    "require": {
+      "php": "^8.0",
+      "kreait/firebase-php": "^5.0"
+    },
+    "scripts": {
+      "post-autoload-dump": [
+        "@php artisan adminauth:install"
+      ]
+    }
+  }
+  
