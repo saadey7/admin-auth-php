@@ -4,25 +4,27 @@
     "type": "library",
     "license": "MIT",
     "autoload": {
-      "psr-4": {
-        "Mughal\\AdminAuth\\": "src/"
-      }
-    },
-    "extra": {
-      "laravel": {
-        "providers": [
-          "Mughal\\AdminAuth\\AdminAuthServiceProvider"
-        ]
-      }
+        "psr-4": {
+            "Mughal\\AdminAuth\\": "src/"
+        }
     },
     "require": {
-      "php": "^8.0",
-      "kreait/firebase-php": "^5.0"
+        "php": "^8.0",
+        "kreait/firebase-php": "^5.0",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mughal\\AdminAuth\\AdminAuthServiceProvider"
+            ]
+        }
     },
     "scripts": {
-      "post-autoload-dump": [
-        "@php artisan adminauth:install"
-      ]
-    }
-  }
-  
+        "post-autoload-dump": [
+            "@php artisan adminauth:install || true"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
