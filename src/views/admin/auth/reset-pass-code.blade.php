@@ -1,279 +1,76 @@
 <!doctype html>
 <html class="no-js " lang="en">
 
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="{{config('app.name')}} Client Dashboard">
-
-    <title>{{config('app.name')}} || {{__('Admin')}} {{__('Login')}}</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/png" href="{{asset('public/favicon-96x96.png')}}" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="{{asset('public/favicon.svg')}}" />
-    <link rel="shortcut icon" href="{{asset('public/favicon.ico')}}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('public/apple-touch-icon.png')}}" />
-    <meta name="apple-mobile-web-app-title" content="Job Finder" />
-    <link rel="manifest" href="{{asset('public/site.webmanifest')}}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-     
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="{{asset('public/plugins/bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('public/css/style.min.css')}}">
-    
-    <!--Dark Mode Css-->
-    <link rel="stylesheet" href="{{asset('public/client/css/darkstyle.css')}}">
-    
-    <style>
-        a{
-            color: #0c7ce6;
-        }
-        a:hover{
-            color: #0c7ce6;
-        }
-        .textDiv{
-            text-align: right;
-        }
-        .form-control{
-            border-radius: 10px;
-        }
-        label{
-            font-family: 'Outfit';
-            color: #717171;
-            font-weight: 500;
-            font-size: 16px;
-        }
-        .form-control::placeholder{
-            font-family: 'Outfit';
-            color: #999DA0;
-            font-weight: 400;
-            font-size: 14px;
-        }
-        .firstDivtext{
-            font-family: 'Outfit';
-            color: #fff;
-            font-weight: 500;
-            font-size: 30px;
-            position: absolute;
-            bottom: 0;
-            padding: 22px;
-            margin-bottom: 0;
-        }
-        
-        .otp-input{
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 20px;
-            border-radius: 8px;
-            border: 1px solid #EDEFF2;
-            background: #EDEFF2;
-            color: #717171;
-        }
-        
-        @media (max-width: 768px){
-            .textDiv{
-                text-align:  center;
-            }
-        }
-        .formDiv::after {
-            content: "";
-            background: url({{asset('public/client/images/ellipse.png')}});
-            background-size: cover;
-            background-repeat: no-repeat;
-            position: absolute;
-            width: 380px; /* Set width */
-            height: 475px; /* Set height */
-            bottom: 0; /* Adjust positioning */
-            right: 0; /* Adjust positioning */
-            z-index: -1; /* Ensure it's behind the content */
-            /*opacity: 10%;*/
-            border-radius:  100%;
-        }
-        
-        
-        
-        .toggle-container {
-          width: 100px;
-          height: 40px;
-          display: flex;
-          flex-direction: row;
-          background-color: #f2f2f2;
-          border-radius: 20px;
-          padding: 5px;
-        }
-        
-        .toggle-button {
-          width: 45px;
-          border-radius: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-        }
-        
-        .toggle-button img {
-          height: 20px;
-        }
-        .dark-mode .toggle-container{
-            background-color: #383839;
-        }
-        
-        .dark-mode .save-button{
-            background-color: #307BF4;
-        }
-        .dark-mode .bottom-border {
-        border-bottom: 1px solid #4D4D4D;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-         
-<body class="theme-blush" style="background: #fff; background-attachment: fixed;">
-    <div class="row bottom-border" style="justify-content: center; align-items: center; margin:0px; padding: 20px 0px; border-bottom: 1px solid #D8D8D8; position: relative;">
-        <img src="{{asset('public/client/images/jobBlack.png')}}" id="brand-logo" alt="Sign In" style="width: 15%;"/>
-        
-          {{-- Theme Toggle --}}
-        <div class="toggle-container modeChange" id="main-Div" style="position: absolute; right: 0px;">
-          <button class="toggle-button dark" onclick="setLight('dark')" id="darkBtn">
-            <img src="{{ asset('public/icons/moon-light.png') }}" id="moon" alt="Moon" />
-          </button>
-          <button class="toggle-button light" onclick="setLight('light')" id="lightBtn">        
-            <img src="{{ asset('public/icons/sun-blue.png') }}" id="sun" alt="Sun" />
-          </button>
-        </div>
-    </div>
-    <div class="row" style="justify-content: center; align-items: center; margin: 0px;">
-        <div class="col-md-6 col-sm-12 p-0 d-none d-md-block" style="height: 100vh; background: url({{asset('public/client/images/loginDutchBg.png')}}); background-size: cover;">
-            <p class="firstDivtext">Voer de verificatiecode in die we naar je e-mail hebben gestuurd om door te gaan.</p>
-        </div>
-        <div class="col-md-6 col-sm-12 p-0 formDiv" style="height: 100vh;">
-            <div class="row justify-content-center" style="margin-top: 50px;">
-                <div class="col-md-10 col-sm-11">
-                    <form class="auth_form" method="POST" action="{{route('admin.confirm-code')}}">
-                        @csrf
-                        <div class="header text-left">
-                            <button type="button" class="btn btn-primary mb-5" style="background: transparent; border: 1px solid #212121; border-radius: 32px; color: #212121; font-size: 16px" onClick="window.history.back();"><img src="{{asset('public/client/images/arrow-left.png')}}" width="20px">&nbsp;&nbsp;{{__('Back')}}</button>
-                            <h1 class="job" class="job" style="font-family: 'Outfit'; margin-bottom: 16px;">{{__('Forgot Password')}}</h1>
-                            <p class="job" style="font-family: 'Outfit';">{{ __('Find what you need and connect you with the communities that matter most.') }}</p>
-                        </div>
-                        <div class="body p-0" style="box-shadow: none;">
-                            <label class="job" style="width: 100%;">{{__('Enter OTP')}} <span class="job" id="resendOtp" style="float: right; cursor: pointer;">{{__('Resend OTP')}}?</span></label>
-                            <div class="input-group mb-3">
-                                <input type="hidden" value="{{ $email }}" name="email">
-                                <div class="otp-inputs text-center" style="display: flex; width: 100%; justify-content: center; gap: 20px; margin-bottom: 20px;">
-                                    <input type="text" maxlength="1" name="otp[]" class="otp-input" placeholder="*" required>
-                                    <input type="text" maxlength="1" name="otp[]" class="otp-input" placeholder="*" required>
-                                    <input type="text" maxlength="1" name="otp[]" class="otp-input" placeholder="*" required>
-                                    <input type="text" maxlength="1" name="otp[]" class="otp-input" placeholder="*" required>
-                                </div>
-                            </div>
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-block waves-effect waves-light" style="background-color: #307BF4 !important; line-height: 2.35em; border-radius: 40px; font-size: 18px; font-weight: 800; font-family: 'DM Sans';">{{ __('Confirm Otp') }}</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+
+<body>
+    <div class="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-200 to-purple-400">
+        <div class="w-full max-w-96 rounded-lg bg-slate-900 p-10 text-sm text-indigo-300 sm:w-96 mt-18">
+            <h1 class="mb-4 text-center text-3xl font-semibold text-white">Verification Code</h1>
+            <p class="mb-6 text-center text-sm">Enter the 4-digit code we've sent to your mail</p>
+            <form method="POST" action="{{route('admin.confirm-code')}}">
+                @csrf
+                <input type="hidden" name="email" value="{{$email}}">
+                <div class="flex mb-6 gap-4 justify-center">
+                    <input type="text" placeholder="*" name="otp[]"
+                        class="otp-input outline-none w-12 h-12 rounded-sm text-center bg-[#333A5c] font-base text-xl border-1 border-b-blue-300"
+                        maxlength="1" required />
+                    <input type="text" placeholder="*" name="otp[]"
+                        class="otp-input outline-none w-12 h-12 rounded-sm text-center bg-[#333A5c] font-base text-xl border-1 border-b-blue-300"
+                        maxlength="1" required />
+                    <input type="text" placeholder="*" name="otp[]"
+                        class="otp-input outline-none w-12 h-12 rounded-sm text-center bg-[#333A5c] font-base text-xl border-1 border-b-blue-300"
+                        maxlength="1" required />
+                    <input type="text" placeholder="*" name="otp[]"
+                        class="otp-input outline-none w-12 h-12 rounded-sm text-center bg-[#333A5c] font-base text-xl border-1 border-b-blue-300"
+                        maxlength="1" required />
                 </div>
-            </div>
-            
+
+                <button type="submit"
+                    class="w-full cursor-pointer rounded-full bg-gradient-to-r from-indigo-400 to-indigo-900 py-3 font-medium tracking-wide text-white">Verify</button>
+            </form>
+            <p class="mt-5 text-center text-sm">
+                <a href="{{route('admin.showlogin')}}"
+                    class="flex items-center justify-center gap-2 text-slate-400 hover:underline" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
+                        <path d="M4 12H20M4 12L8 8M4 12L8 16" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Back to log in</span>
+                </a>
+            </p>
         </div>
+        <!-- <p class="absolute bottom-10 right-20 font-semibold text-slate-700">Inspired from <a
+                href="https://youtu.be/7BTsepZ9xp8?si=FKKKC2QruJa_EYnc" target="_blank"
+                class="text-indigo-800 underline">
+                GreatStack
+            </a></p> -->
     </div>
-    @include('client.pages.toastr')
-    <!-- Jquery Core Js -->
-    <!-- Jquery Core Js -->
-    <script src="{{asset('public/bundles/libscripts.bundle.js')}}"></script>
-    <script src="{{asset('public/bundles/vendorscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js -->
     <script>
-        const otpInputs = document.querySelectorAll('.otp-input');
+    const otpInputs = document.querySelectorAll('.otp-input');
 
-        otpInputs.forEach((input, index) => {
-            input.addEventListener('input', (e) => {
-                if (e.target.value.length === 1) {
-                    if (index < otpInputs.length - 1) {
-                        otpInputs[index + 1].focus();
-                    }
+    otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.value.length === 1) {
+                if (index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
                 }
-            });
-        
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && !input.value) {
-                    if (index > 0) {
-                        otpInputs[index - 1].focus();
-                    }
-                }
-            });
-        });
-
-    </script>
-    <script>
-        const lightMode = "{{ asset('public/icons/lightmode.png') }}";
-        const darkMode = "{{ asset('public/icons/darkmode.png') }}";
-        const logoLightMode = "{{ asset('public/client/images/jobBlack.png') }}";
-        const logoDarkMode = "{{ asset('public/client/images/jobfinder.png') }}";
-        const sunIconLightMode = "{{ asset('public/icons/sun-blue.png') }}";
-        const sunIconDarkMode = "{{ asset('public/icons/sun-light.png') }}";
-        const moonIconLightMode = "{{ asset('public/icons/moon-dark.png') }}";
-        const moonIconDarkMode = "{{ asset('public/icons/moon-light.png') }}";
-        
-        function setLight(mode) {
-            const brandLogo = document.getElementById('brand-logo');
-            const darkBtn = document.getElementById('darkBtn');
-            const lightBtn = document.getElementById('lightBtn');
-            const iconSunImg = document.getElementById('sun');
-            const iconMoonImg = document.getElementById('moon');
-            const mainDiv = document.getElementById('main-Div');
-        
-            if (mode === 'dark') {
-              document.body.classList.add("dark-mode");
-              iconSunImg.src = sunIconDarkMode;
-              iconMoonImg.src = moonIconDarkMode;
-              brandLogo.src = logoDarkMode;
-              darkBtn.style.backgroundColor = "#4d4d4d";
-              lightBtn.style.backgroundColor = "transparent";
-              mainDiv.style.borderWidth = "1px";
-              mainDiv.style.borderColor = "#4d4d4d";
-              mainDiv.style.borderStyle = 'solid';
-              localStorage.setItem("theme", "dark");
-            } else {
-              document.body.classList.remove("dark-mode");
-              brandLogo.src = logoLightMode;
-              iconSunImg.src = sunIconLightMode;
-              iconMoonImg.src = moonIconLightMode;
-              darkBtn.style.backgroundColor = "transparent";
-              lightBtn.style.backgroundColor = "white";
-              mainDiv.style.borderWidth = "0px";
-              localStorage.setItem("theme", "light");
             }
-        }
-        
-          window.onload = function () {
-            const theme = localStorage.getItem("theme");
-            setLight(theme === "dark" ? "dark" : "light");
-          };
-    </script>
-    <script>
-        $('#resendOtp').on('click', function () {
-            $.ajax({
-                url: "{{ route('admin.forgot') }}", // Adjust route name
-                method: "POST",
-                data: {
-                    email: "{{ $email }}",
-                    _token: "{{ csrf_token() }}", // required for Laravel POST
-                },
-                success: function (response) {
-                    toastr.success('Resend successfully!');
-                },
-                error: function (xhr) {
-                    toastr.error('Failed to send OTP. Please try again.');
-                }
-            });
         });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !input.value) {
+                if (index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            }
+        });
+    });
     </script>
 </body>
+
 </html>

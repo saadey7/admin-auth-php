@@ -2,8 +2,8 @@
 
 namespace Mughal\AdminAuth\Controllers;
 
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Http\Controllers\Controller;
+// use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\EmailVerificationRequest;
 use App\Models\EmailVerfication;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     protected $guard = 'admin';
-    use AuthenticatesUsers;
+    // use AuthenticatesUsers;
     protected $redirectTo = '/admin';
     protected $loginPath = '/admin/login';
     public function __construct()

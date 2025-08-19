@@ -1,265 +1,54 @@
-<!doctype html>
-<html class="no-js " lang="en">
-
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="{{config('app.name')}} Client Dashboard">
-
-    <title>{{config('app.name')}} || {{__('Admin')}} {{__('Login')}}</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{asset('public/favicon-96x96.png')}}" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="{{asset('public/favicon.svg')}}" />
-    <link rel="shortcut icon" href="{{asset('public/favicon.ico')}}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('public/apple-touch-icon.png')}}" />
-    <meta name="apple-mobile-web-app-title" content="Job Finder" />
-    <link rel="manifest" href="{{asset('public/site.webmanifest')}}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-     
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="{{asset('public/plugins/bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('public/css/style.min.css')}}">
-     
-    <!--Dark Mode Css-->
-    <link rel="stylesheet" href="{{asset('public/client/css/darkstyle.css')}}">
-    
-    <style>
-        a{
-            color: #0c7ce6;
-        }
-        a:hover{
-            color: #0c7ce6;
-        }
-        .textDiv{
-            text-align: right;
-        }
-        .form-control{
-            border-radius: 10px;
-        }
-        label{
-            font-family: 'Outfit';
-            color: #717171;
-            font-weight: 500;
-            font-size: 16px;
-        }
-        .form-control::placeholder{
-            font-family: 'Outfit';
-            color: #999DA0;
-            font-weight: 400;
-            font-size: 14px;
-        }
-        .firstDivtext{
-            font-family: 'Outfit';
-            color: #fff;
-            font-weight: 500;
-            font-size: 30px;
-            position: absolute;
-            bottom: 0;
-            padding: 22px;
-            margin-bottom: 0;
-        }
-        
-        @media (max-width: 768px){
-            .textDiv{
-                text-align:  center;
-            }
-        }
-        .formDiv::after {
-            content: "";
-            background: url({{asset('public/client/images/ellipse.png')}});
-            background-size: cover;
-            background-repeat: no-repeat;
-            position: absolute;
-            width: 380px; /* Set width */
-            height: 475px; /* Set height */
-            bottom: 0; /* Adjust positioning */
-            right: 0; /* Adjust positioning */
-            z-index: -1; /* Ensure it's behind the content */
-            /*opacity: 10%;*/
-            border-radius:  100%;
-        }
-        
-        .toggle-container {
-          width: 100px;
-          height: 40px;
-          display: flex;
-          flex-direction: row;
-          background-color: #f2f2f2;
-          border-radius: 20px;
-          padding: 5px;
-        }
-        
-        .toggle-button {
-          width: 45px;
-          border-radius: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-        }
-        
-        .toggle-button img {
-          height: 20px;
-        }
-        .dark-mode .toggle-container{
-            background-color: #383839;
-        }
-        
-        .dark-mode .save-button{
-            background-color: #307BF4;
-        }
-        .bottom-border {
-            border-bottom: 1px solid #D8D8D8;
-        }
-        
-        .dark-mode .bottom-border {
-            border-bottom: none !important;
-        }
-
-    </style>
-</head>
-
-<body class="theme-blush" style="background: #fff; background-attachment: fixed;">
-    <div class="row bottom-border" style="justify-content: center; align-items: center; margin:0px; padding: 20px 0px; border-bottom: 1px solid #D8D8D8; position: relative;">
-        <img src="{{asset('public/client/images/jobBlack.png')}}" id="brand-logo" alt="Sign In" style="width: 15%;"/>
-        
-          {{-- Theme Toggle --}}  
-        <div class="toggle-container modeChange" id="main-Div" style="position: absolute; right: 0px;">
-          <button class="toggle-button dark" onclick="setLight('dark')" id="darkBtn">
-            <img src="{{ asset('public/icons/moon-light.png') }}" id="moon" alt="Moon" />
-          </button>
-          <button class="toggle-button light" onclick="setLight('light')" id="lightBtn">        
-            <img src="{{ asset('public/icons/sun-blue.png') }}" id="sun" alt="Sun" />
-          </button>
-        </div>
-    </div>
-    <div class="row" style="justify-content: center; align-items: center; margin: 0px;">
-        <div class="col-md-6 col-sm-12 p-0 d-none d-md-block" style="height: 100vh; background: url({{asset('public/client/images/loginDutchBg.png')}}); background-size: cover;">
-            <p class="firstDivtext">Stel een nieuw wachtwoord in om je account veilig te houden.</p>
-        </div>
-        <div class="col-md-6 col-sm-12 p-0 formDiv" style="height: 100vh; align-content: center;">
-            <div class="row justify-content-center m-0">
-                <div class="col-md-10 col-sm-11">
-                    <form class="auth_form" method="POST" action="{{route('admin.pass.code')}}">
-                        @csrf
-                        <div class="header text-left">
-                            <button type="button" class="btn btn-primary" style="background: transparent; border: 1px solid #212121; border-radius: 32px; color: #212121; font-size: 16px" onClick="window.history.back();"><img src="{{asset('public/client/images/arrow-left.png')}}" width="20px">&nbsp;&nbsp;{{__('Back')}}</button>
-                            <h1 class="job" style="font-family: 'Outfit'; margin-bottom: 16px;">{{__('Change Password')}}</h1>
-                            <p class="job" style="font-family: 'Outfit';">{{ __('Find what you need and connect you with the communities that matter most.') }}</p>
-                        </div>
-                        <div class="body p-0" style="box-shadow: none;">
-                            <label class="job">{{__('Password')}}</label>
-                            <input type="hidden" value="{{ $email }}" name="email">
-                            <input type="hidden" value="{{ $pin }}" name="pin">
-                            <div class="input-group mb-2">
-                                <input type="password" class="form-control" placeholder="{{__('Enter your password')}}" name="password" id="passwordInput" required>
-                                <!--<div class="input-group-append">-->
-                                <!--    <span class="input-group-text" onclick="togglePasswordVisibility()"><i-->
-                                <!--                class="zmdi zmdi-eye" id="toggleIcon"></i></span>-->
-                                <!--</div>-->
-                            </div>
-                            <label class="job" style="width: 100%;">{{__('Confirm Password')}}</label>
-                            <div class="input-group mb-1">
-                                <input type="password" class="form-control" placeholder="{{__('Reenter your password')}}" name="password_confirmation" id="passwordInput" required>
-                                <!--<div class="input-group-append">-->
-                                <!--    <span class="input-group-text" onclick="togglePasswordVisibility()"><i-->
-                                <!--                class="zmdi zmdi-eye" id="toggleIcon"></i></span>-->
-                                <!--</div>-->
-                            </div>
-                           <div class="d-flex justify-content-center align-items-center my-4">
-                                <button type="submit"
-                                    class="btn btn-primary"
-                                    style="background-color: #307BF4 !important;
-                                           line-height: 2.35em;
-                                           border-radius: 40px;
-                                           font-size: 18px;
-                                           font-weight: 800;
-                                           font-family: 'DM Sans', sans-serif;
-                                           width: 80%;
-                                           max-width: 400px;">
-                                    {{ __('Confirm Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    @include('client.pages.toastr')
-    <!-- Jquery Core Js -->
-    <script src="{{asset('public/bundles/libscripts.bundle.js')}}"></script>
-    <script src="{{asset('public/bundles/vendorscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js -->
-    <script>
-    function togglePasswordVisibility() {
-        const passwordInput = document.getElementById("passwordInput");
-        const toggleIcon = document.getElementById("toggleIcon");
-
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            toggleIcon.classList.replace("zmdi-eye", "zmdi-eye-off");
-        } else {
-            passwordInput.type = "password";
-            toggleIcon.classList.replace("zmdi-eye-off", "zmdi-eye");
-        }
-    }
-</script>
-
-    <script>
-        const lightMode = "{{ asset('public/icons/lightmode.png') }}";
-        const darkMode = "{{ asset('public/icons/darkmode.png') }}";
-        const logoLightMode = "{{ asset('public/client/images/jobBlack.png') }}";
-        const logoDarkMode = "{{ asset('public/client/images/jobfinder.png') }}";
-        const sunIconLightMode = "{{ asset('public/icons/sun-blue.png') }}";
-        const sunIconDarkMode = "{{ asset('public/icons/sun-light.png') }}";
-        const moonIconLightMode = "{{ asset('public/icons/moon-dark.png') }}";
-        const moonIconDarkMode = "{{ asset('public/icons/moon-light.png') }}";
-        
-        function setLight(mode) {
-            const brandLogo = document.getElementById('brand-logo');
-            const darkBtn = document.getElementById('darkBtn');
-            const lightBtn = document.getElementById('lightBtn');
-            const iconSunImg = document.getElementById('sun');
-            const iconMoonImg = document.getElementById('moon');
-            const mainDiv = document.getElementById('main-Div');
-        
-            if (mode === 'dark') {
-              document.body.classList.add("dark-mode");
-              iconSunImg.src = sunIconDarkMode;
-              iconMoonImg.src = moonIconDarkMode;
-              brandLogo.src = logoDarkMode;
-              darkBtn.style.backgroundColor = "#4d4d4d";
-              lightBtn.style.backgroundColor = "transparent";
-              mainDiv.style.borderWidth = "1px";
-              mainDiv.style.borderColor = "#4d4d4d";
-              mainDiv.style.borderStyle = 'solid';
-              localStorage.setItem("theme", "dark");
-            } else {
-              document.body.classList.remove("dark-mode");
-              brandLogo.src = logoLightMode;
-              iconSunImg.src = sunIconLightMode;
-              iconMoonImg.src = moonIconLightMode;
-              darkBtn.style.backgroundColor = "transparent";
-              lightBtn.style.backgroundColor = "white";
-              mainDiv.style.borderWidth = "0px";
-              localStorage.setItem("theme", "light");
-            }
-        }
-        
-          window.onload = function () {
-            const theme = localStorage.getItem("theme");
-            setLight(theme === "dark" ? "dark" : "light");
-          };
-    </script>
-
-</body>
-
-
-</html>
+ <!doctype html>
+ <html class="no-js " lang="en">
+ <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+ </head>
+ <body>
+     <div
+         class="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-200 to-purple-400 relative pb-32">
+         <div class="w-full rounded-lg bg-slate-900 p-10 text-sm text-indigo-300 sm:w-96 max-w-96 mt-18">
+             <h1 class="mb-4 text-center text-3xl font-semibold text-white">Reset Password</h1>
+             <p class="mb-6 text-center text-sm">Change your password</p>
+             <form method="POST" action="{{ route('admin.pass.code') }}">
+                @csrf
+                 <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4">
+                         <path
+                             d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                             stroke="#64748b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                     </svg>
+                     <input type="password" placeholder="New Paswword" name="password" class="border-none outline-none" />
+                 </div>
+                 <div class="mb-5 flex gap-3 rounded-full bg-[#333A5c] px-6 py-3">
+                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4">
+                         <path
+                             d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                             stroke="#64748b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                     </svg>
+                     <input type="password" name="password_confirmation" placeholder="Confirm Password" class="border-none outline-none" />
+                 </div>
+                 <button type="submit"
+                     class="w-full rounded-full bg-gradient-to-r from-indigo-400 to-indigo-900 py-3 font-medium tracking-wide text-white cursor-pointer">Reset Password</button>
+             </form>
+             <p class="mt-5 text-center text-sm">
+                <a href="{{route('admin.showlogin')}}"
+                    class="flex items-center justify-center gap-2 text-slate-400 hover:underline" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
+                        <path d="M4 12H20M4 12L8 8M4 12L8 16" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Back to log in</span>
+                </a>
+              </p>
+             
+         </div>
+         <!-- <p class="absolute bottom-10 right-20 font-semibold text-slate-700">Inspired from <a
+                 href="https://youtu.be/7BTsepZ9xp8?si=FKKKC2QruJa_EYnc" target="_blank"
+                 class="text-indigo-800 underline">
+                 GreatStack
+             </a></p> -->
+     </div>
+ </body>
+ </html>

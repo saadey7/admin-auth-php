@@ -11,13 +11,7 @@ Admin authentication package for Laravel with Firebase notifications. Provides l
 Install the package via Composer:
 
 ```bash
-composer require saadmughal/admin-auth
-```
-
-Publish the package config and views:
-```bash
-php artisan vendor:publish --tag=adminauth-config
-php artisan vendor:publish --tag=adminauth-views
+composer require saadmughal/admin-auth-php
 ```
 
 Run migrations:
@@ -67,9 +61,7 @@ $admin->sendNotification($admin->id, $data, $message);
 ```bash
 laravel new myproject
 cd myproject
-composer require mughal/admin-auth
-php artisan vendor:publish --tag=adminauth-config
-php artisan vendor:publish --tag=adminauth-views
+composer require mughal/admin-auth-php
 php artisan migrate
 ```
 
