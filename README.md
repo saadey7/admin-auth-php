@@ -71,6 +71,13 @@ You can change this in `config/adminauth.php`:
 'redirect_to' => '/dashboard',
 ```
 
+## 6. Publish Config
+After installing, publish the config file:
+
+```bash
+php artisan vendor:publish --provider="Mughal\AdminAuth\AdminAuthServiceProvider" --tag=config
+```
+
 ## Firebase Notifications (Optional)
 If you want to send notifications to admins, configure Firebase:
 
