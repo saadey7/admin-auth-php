@@ -23,6 +23,9 @@ class AdminAuthServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/adminauth.php' => config_path('adminauth.php'),
         ], 'config');
+
+        $this->app['router']->aliasMiddleware('admin.guest', \Mughal\AdminAuth\Middleware\RedirectIfAdminAuthenticated::class);
+
     }
 
     public function register()

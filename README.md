@@ -71,6 +71,18 @@ You can change this in `config/adminauth.php`:
 'redirect_to' => '/dashboard',
 ```
 
+After installing and migrating, you must define your own admin dashboard route.  
+
+Add this to `routes/web.php` in your Laravel project:
+
+```php
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard'); 
+    });
+});
+```
+
 ## 6. Publish Config
 After installing, publish the config file:
 
