@@ -64,12 +64,7 @@ Add admin guard and provider in `config/auth.php`:
     ],
 ],
 ```
-## 3. Run Migrations
-```bash
-php artisan migrate
-```
-
-## 4. Dashboard Redirect
+## 5. Dashboard Redirect
 By default, after successful login, admins are redirected to `/admin`.  
 You can change this in `config/adminauth.php`:
 ```bash
