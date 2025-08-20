@@ -3,6 +3,12 @@
     "description": "Admin authentication package for Laravel with Firebase notifications",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Saad Mughal",
+            "email": "saadey7@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Mughal\\AdminAuth\\": "src/"
@@ -15,8 +21,8 @@
     },
     "extra": {
         "laravel": {
-            "providers": [
-                "Mughal\\AdminAuth\\AdminAuthServiceProvider"
+            "dont-discover": [
+                "saadmughal/admin-auth-php"
             ]
         }
     },
