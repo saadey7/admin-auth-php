@@ -1,29 +1,54 @@
-# AdminAuth Laravel Package
+# Admin Authentication Package for Laravel
 
-[![Latest Version](https://img.shields.io/packagist/v/saadmughal/admin-auth.svg)](https://packagist.org/packages/saadmughal/admin-auth)
-[![License](https://img.shields.io/packagist/l/saadmughal/admin-auth.svg)](https://packagist.org/packages/saadmughal/admin-auth)
-[![PHP Version](https://img.shields.io/packagist/php-v/saadmughal/admin-auth.svg)](https://www.php.net/)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/saadmughal/admin-auth-php.svg)](https://packagist.org/packages/saadmughal/admin-auth-php)
+[![Total Downloads](https://img.shields.io/packagist/dt/saadmughal/admin-auth-php.svg)](https://packagist.org/packages/saadmughal/admin-auth-php)
+[![License](https://img.shields.io/packagist/l/saadmughal/admin-auth-php.svg)](https://packagist.org/packages/saadmughal/admin-auth-php)
+[![PHP Version Require](https://img.shields.io/packagist/php-v/saadmughal/admin-auth-php.svg)](https://www.php.net/)
 
-Admin authentication package for Laravel with Firebase notifications. Provides login, registration, password reset, email verification, and Firebase notifications for admins.
+A complete Admin Authentication package for Laravel.
+Features include:
 
-## Installation & Setup
+1. 🔐 Admin login & registration
 
-Install the package via Composer:
+2. 🔑 Password reset & email verification
+
+3. 🔔 Firebase push notifications for admins
+
+4. ⚡ Ready-to-use routes, controllers, and views
+
+# 🚀 Installation & Setup
+
+## 1. Install via Composer
 
 ```bash
 composer require saadmughal/admin-auth-php
 ```
 
-Run migrations:
+## 2. Register Service Provider
+This package uses manual provider registration (to avoid errors on removal).
+
+Laravel 9 & 10
+
+Edit `config/app.php` and add to the providers array:
+```bash
+Mughal\AdminAuth\AdminAuthServiceProvider::class,
+```
+Laravel 11 & above
+
+Edit `bootstrap/providers.php`:
+```bash
+return [
+    // other providers...
+    Mughal\AdminAuth\AdminAuthServiceProvider::class,
+];
+```
+
+## 3. Run Migrations
 ```bash
 php artisan migrate
 ```
 
-Set your Firebase JSON path in `.env` :
-```bash
-ADMIN_FIREBASE_JSON=/full/path/to/firebase_project.json
-```
-
+## 4. Add Guard & Provider
 Add admin guard and provider in `config/auth.php`:
 ```bash
 'guards' => [
@@ -40,8 +65,16 @@ Add admin guard and provider in `config/auth.php`:
 ],
 ```
 
-## Firebase Notifications
-To send Firebase notifications to admins:
+
+## Firebase Notifications (Optional)
+If you want to send notifications to admins, configure Firebase:
+
+1. Add your Firebase JSON path in `.env`:
+```bash
+ADMIN_FIREBASE_JSON=/full/path/to/firebase_project.json
+```
+2. Save the admin’s FCM token when they log in
+3. If you have added the Firebase JSON file path in your .env file and the FCM token is being stored in the database, you can use the below function to send notifications to admins.
 ```bash
 use Mughal\AdminAuth\Models\Admin;
 
@@ -57,16 +90,26 @@ $message = "Check your dashboard";
 $admin->sendNotification($admin->id, $data, $message);
 ```
 
-# Quick Start
-```bash
-laravel new myproject
-cd myproject
-composer require mughal/admin-auth-php
-php artisan migrate
-```
-
-Set Firebase JSON path in .env as above and visit in your browser:
+## Visit in your browser:
 ```bash
 http://localhost:8000/admin/login
 http://localhost:8000/admin/register
+```
+# 🗑️ Removal / Uninstall
+To uninstall cleanly without errors:
+
+1. Remove provider entry
+   1.1 Laravel 9 & 10 → remove from config/app.php
+   1.2 Laravel 11 → remove from bootstrap/providers.php
+
+2. Remove the package
+```bash
+composer remove saadmughal/admin-auth-php
+```
+3. Clear caches
+```bash
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
 ```

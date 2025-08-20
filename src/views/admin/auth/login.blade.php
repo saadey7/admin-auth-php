@@ -38,6 +38,22 @@
              <p class="mt-4 mb-7 text-center text-sm text-slate-400">Don't Have an account? <a
                      href="{{route('admin.showregister')}}" target="_blank"
                      class="hover:underline text-blue-400">Sign Up</a></p>
+                     <div class="text-center mb-3">
+                <script type="text/javascript">window.setTimeout("document.getElementById('popmessage').style.display='none';", 6000); </script>
+                @if(session()->has('error'))
+                    <div id="popmessage" class="text-danger form-control-feedback">
+                       @php $errors =  session()->get('error');  @endphp
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}<br/>
+                        @endforeach
+                    </div>
+                @endif
+                @if(session()->has('success'))
+                    <div id="popmessage" class="text-success form-control-feedback">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+            </div>
              
          </div>
          <!-- <p class="absolute bottom-10 right-20 font-semibold text-slate-700">Inspired from <a
