@@ -22,7 +22,6 @@ class LoginController extends Controller
     protected $loginPath = '/admin/login';
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
         $this->middleware('guest:admin')->except('logout');
     }
 
@@ -237,6 +236,6 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::guard('admin')->logout();
-        return redirect()->route('admin.storelogin');
+        return redirect()->route('admin.showlogin');
     }
 }
