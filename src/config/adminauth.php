@@ -10,5 +10,5 @@ return [
      * Admin guard and redirect
      */
     'guard' => 'admin',
-    'redirect_to' => '/admin',
+    'redirect_to' => env('ADMIN_DASHBOARD', '/admin'),
 ];

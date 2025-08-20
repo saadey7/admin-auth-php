@@ -24,7 +24,23 @@ class AdminAuthServiceProvider extends ServiceProvider
             __DIR__.'/config/adminauth.php' => config_path('adminauth.php'),
         ], 'config');
 
-        $this->app['router']->aliasMiddleware('admin.guest', \Mughal\AdminAuth\Middleware\RedirectIfAdminAuthenticated::class);
+        $this->app->booted(function () {
+            app(\Illuminate\Foundation\Application::class)
+                ->useRedirects(function ($redirects) {
+                    // Sirf admin guard ke liye
+                    $redirects->redirectGuestsUsing(function ($request) {
+                        if ($request->is('admin/*')) {
+                            return route('admin.showlogin');
+                        }
+                        return null; // default
+                    });
+                });
+        });
+
+        $this->app['router']->aliasMiddleware(
+            'admin.guest',
+            \Mughal\AdminAuth\Middleware\RedirectIfAdminAuthenticated::class
+        );
 
     }
 

@@ -5,7 +5,7 @@ use Mughal\AdminAuth\Controllers\LoginController;
 
 Route::prefix('admin')->group(function () {
     // Guest routes
-    Route::middleware('guest:admin')->group(function () {
+    Route::middleware('admin.guest')->group(function () {
         Route::get('/login', [LoginController::class, 'show_login_form'])->name('admin.showlogin');
         Route::post('/login', [LoginController::class, 'process_login'])->name('admin.storelogin');
         Route::get('/register', [LoginController::class, 'show_signup_form'])->name('admin.showregister');
