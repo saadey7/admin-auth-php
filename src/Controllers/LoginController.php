@@ -30,7 +30,7 @@ class LoginController extends Controller
     public function show_login_form()
     {
         if (Auth::guard('admin')->check()) {
-            return redirect('/admin');
+            return redirect()->intended(config('adminauth.redirect_to'));
         }
         return view('adminauth::admin.auth.login');
     }
@@ -50,7 +50,7 @@ class LoginController extends Controller
             return redirect($this->loginPath)->with('error','Je e-mail of wachtwoord is ongeldig!');
         }
         if (Auth::guard('admin')->attempt(['email' => $admin->email, 'password' => $request->password], $request->get('remember'))) {
-            return redirect('/admin');
+            return redirect()->intended(config('adminauth.redirect_to'));
         }
         return redirect($this->loginPath)->with('error','Je e-mail of wachtwoord is ongeldig!');
     }
@@ -58,7 +58,7 @@ class LoginController extends Controller
     public function show_signup_form()
     {
         if (Auth::guard('admin')->check()) {
-            return redirect('/admin');
+            return redirect()->intended(config('adminauth.redirect_to'));
         }
         return view('adminauth::admin.auth.register');
     }
@@ -78,13 +78,13 @@ class LoginController extends Controller
             'email' => strtolower($request->input('email')),
             'password' => bcrypt($request->input('password')),
         ]);
-        return redirect('/admin')->with('success','Je account is aangemaakt');
+        return redirect()->intended(config('adminauth.redirect_to'))->with('success','Je account is aangemaakt');
     }
 
     public function passwordResetForm()
     {
         if (Auth::guard('admin')->check()) {
-            return redirect('/admin');
+            return redirect()->intended(config('adminauth.redirect_to'));
         }
         return view('adminauth::admin.auth.rest-pass-form');
     }
@@ -92,7 +92,7 @@ class LoginController extends Controller
     public function confirmForm(Request $request)
     {
         if (Auth::guard('admin')->check()) {
-            return redirect('/admin');
+            return redirect()->intended(config('adminauth.redirect_to'));
         }
     
         $email = $request->email;
@@ -191,7 +191,7 @@ class LoginController extends Controller
       public function changePassword()
     {
         if (Auth::guard('admin')->check()) {
-            return redirect('/admin');
+            return redirect()->intended(config('adminauth.redirect_to'));
         }
         $email = session('email');
         return view('adminauth::admin.auth.change-password', compact('email'));
