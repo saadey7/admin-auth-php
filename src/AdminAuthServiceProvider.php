@@ -21,7 +21,7 @@ class AdminAuthServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config/adminauth.php', 'adminauth');
 
         $this->publishes([
-            __DIR__.'/../config/adminauth.php' => config_path('adminauth.php'),
+            __DIR__.'/config/adminauth.php' => config_path('adminauth.php'),
         ], 'config');
     }
 
