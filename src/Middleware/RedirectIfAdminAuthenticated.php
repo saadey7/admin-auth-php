@@ -10,7 +10,8 @@ class RedirectIfAdminAuthenticated
     public function handle($request, Closure $next, $guard = 'admin')
     {
         if (Auth::guard($guard)->check()) {
-            return redirect(config('adminauth.redirect_to', '/admin'));
+            // Agar already login hai → dashboard ya intended page
+            return redirect()->intended(config('adminauth.redirect_to', '/admin'));
         }
 
         return $next($request);

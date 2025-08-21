@@ -49,7 +49,7 @@ class LoginController extends Controller
             return redirect($this->loginPath)->with('error','Je e-mail of wachtwoord is ongeldig!');
         }
         if (Auth::guard('admin')->attempt(['email' => $admin->email, 'password' => $request->password], $request->get('remember'))) {
-            return redirect()->intended(config('adminauth.redirect_to'));
+            return redirect()->intended(config('adminauth.redirect_to', '/admin'));
         }
         return redirect($this->loginPath)->with('error','Je e-mail of wachtwoord is ongeldig!');
     }
